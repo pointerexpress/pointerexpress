@@ -1,0 +1,46 @@
+
+.file-wrapper {
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+
+.file-wrapper .feedback {
+    position: relative;
+    top: 5px;
+}
+
+.file-wrapper span.ui-state-disabled {
+	font-style: italic;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 4px;
+   vertical-align: top;
+
+}
+
+
+
+.file-wrapper span.folder{
+   float:right;
+    border: none;
+    margin-right: 5px;
+    margin-top: -2px;
+}
+
+.file-wrapper .ui-button-text {
+    padding: 1px 1em;
+}
+
+.file-wrapper input {
+  cursor: pointer;
+  font-size: 100px;
+  height: 100%;
+  filter: alpha(opacity=0.00);
+  -moz-opacity: 0.00;
+  opacity: 0.00;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

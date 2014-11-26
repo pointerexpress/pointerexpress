@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
+        <title>Pointer Express</title>
+        <!--
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script type="text/javascript" charset="utf-8" src="cordova_plugins.js"></script>
+        -->
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript" charset="utf-8" src="geolocation.js"></script>
+        <script type="text/javascript" src="jquery/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="jquery/jquery.i18n.properties-min.js"></script>
+        <script type="text/javascript" src="jquery/jquery.mobile-1.2.1.min.js"></script>
+        <link rel="stylesheet" href="jquery/jquery.mobile-1.2.1.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style.mobile-jq.css" type="text/css">
+        <script type="text/javascript" src="OpenLayers/proj4js-compressed.js"></script>
+        <script type="text/javascript" src="OpenLayers/defs/EPSG32617.js"></script>
+        <script type="text/javascript" src="OpenLayers/OpenLayers.js?mobile"></script>
+        <script>
+            var pathToDwrServlet = "http://mapas.pointer-express.com/pointer/dwr"; // Path to dwr on foreign domain
+            var pathBaseServlet = "http://mapas.pointer-express.com/"; // Ruta servidor principal
+        </script>
+        <script type='text/javascript' src='http://mapas.pointer-express.com/pointer/dwr/engine.js'></script>
+        <script type='text/javascript' src='http://mapas.pointer-express.com/pointer/dwr/interface/Server.js'></script>
+        <style type="text/css"> 
+            .ui-mini .ui-btn-inner {
+                font-size: 20.5px;
+            }
+            .ui-title, .ui-footer .ui-title {
+                font-size: 20px;
+            }
+            .ui-li-heading {
+                font-size: 20px;
+            }
+            .ui-field-contain .ui-select{
+                font-size: 20px;
+                width: 100%;
+            }
+            .ui-field-contain input.ui-input-text, .ui-field-contain textarea.ui-input-text, .ui-field-contain .ui-input-search{
+                font-size: 20px;
+                width: 100%;
+            }
+        </style> 
+    </head>
+    <body>
+
+        <h1 id="title">Pointer Express</h1>
+        <div id="tags">mobile, pointer</div>
+        <p id="shortdesc">Pointer Movil.</p>
+
+        <section data-role="page" id="mappage">
+            <!--
+            <div id="encab" data-role="controlgroup" data-type="vertical">
+                <a href="#" data-role="button" data-iconpos="notext"></a>
+            </div>
+            -->
+            <div id="resultado">
+                <div id="hresultado"></div>
+                <div id="cresultado"></div>
+            </div>
+            <div data-role="header" id="encabezado">
+                <div  data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <!--
+                                        <a href="#" id="searchbt" data-icon="search" data-role="button" data-iconpos="notext"></a>
+                                        <a href="#mappage" id="locate" data-icon="locate" data-role="button" data-iconpos="notext"></a>
+                    -->                
+<!--
+                    <a href="#" id="searchbt" data-icon="search" data-role="button" data-iconpos="notext"></a>
+                    <a href="#mappage" id="locate" data-icon="locate" data-role="button" data-iconpos="notext"></a>
+-->
+                    <a href="#" data-role="button" data-icon="plus" id="plus"
+                       data-iconpos="notext"></a> 
+                    <a href="#" data-role="button"
+                       data-icon="minus" id="minus" data-iconpos="notext"></a>
+
+                    <a href="#" data-role="button" data-iconpos="notext" id="optbt"></a>
+
+                    <a href="#" data-role="button" data-icon="arrow-d" data-iconpos="notext" id="logbt"></a>
+<!--
+   
+                    <a href="#" data-role="button" data-iconpos="notext" id="logbt"></a>
+                    
+                    <a href="#" class="toolsmap" id="bextender"  data-icon="extender"  data-role="button" data-iconpos="notext">Extender</a>
+                    <a href="#" class="toolsmap" id="blimpiar"  data-icon="borrar" data-role="button" data-iconpos="notext">Limpiar</a>
+-->
+                </div>  
+            <div  data-role="controlgroup" id="grupobt" data-type="horizontal" data-mini="true">
+                <a href="#" id="searchbt" data-icon="search" data-role="button" data-iconpos="notext" >Busqueda</a>
+                <a href="#mappage" id="locate" data-icon="locate" data-role="button" data-iconpos="notext" >Mi Pointer</a> 
+                <a href="#mappage" class="toolsmap" id="bextender"  data-icon="extender"  data-role="button"  data-iconpos="notext" >Extender</a>
+                <a href="#mappage" class="toolsmap" id="blimpiar"  data-icon="borrar" data-role="button"  data-iconpos="notext" >Limpiar</a>
+            </div>
+            </div>  
+
+            <div data-role="content">
+                <div id="map"></div>
+            </div>
+            <!--
+            <div data-role="footer">
+                <div  data-role="controlgroup" id="grupobt" data-type="horizontal" data-mini="true">
+                    <a href="#" id="searchbt" data-icon="search" data-role="button">Busqueda</a>
+                    <a href="#mappage" id="locate" data-icon="locate" data-role="button">Mi Pointer</a> 
+                </div>
+            </div>
+            -->
+            <div id="salidaapp" data-role="controlgroup" data-type="vertical">
+                <a href="#" data-role="button" id="salirapp" data-iconpos="notext"></a>
+            </div>
+
+            <div id="acercade" data-role="controlgroup" data-type="vertical">
+                Copyright &copy; 2013 <br/><a href="http://www.pointer-express.com">Pointer Express</a>
+            </div>
+            <!--
+                        <div id="pieizqapp" data-role="controlgroup" data-type="vertical">
+                                <a href="#" data-role="button" data-icon="plus" id="plus"
+                                   data-iconpos="notext"></a> 
+                        </div>
+            
+                        <div id="piederapp" data-role="controlgroup" data-type="vertical">
+                                <a href="#" data-role="button"
+                                   data-icon="minus" id="minus" data-iconpos="notext"></a>
+                        </div> 
+            -->
+
+<!--
+
+            <div id="pieizqapp" data-role="controlgroup" data-type="vertical">
+                    <a href="#" data-role="button" data-icon="plus" id="plus"
+                       data-iconpos="notext"></a> 
+            </div>
+
+            <div id="piederapp" data-role="controlgroup" data-type="vertical">
+                    <a href="#" data-role="button"
+                       data-icon="minus" id="minus" data-iconpos="notext"></a>
+            </div> 
+-->
+            <!--
+                        <div id="herramientas" data-role="controlgroup" data-type="vertical">
+                    <a href="#" class="toolsmap" id="bextender" data-role="button" data-iconpos="notext">Extender</a>
+                    <a href="#" class="toolsmap" id="blimpiar" data-role="button" data-iconpos="notext">Limpiar</a>
+
+                        </div>
+            -->
+            <div id='notimsg' data-role="controlgroup" data-type="vertical">
+                &nbsp;
+            </div>
+
+            <div data-role="popup" id="popupUbicacion" class="ui-content"
+                 data-theme="d" data-transition='slidedown'>
+                <a href="#" data-rel="external" data-role="button" data-theme="a"
+                   data-icon="delete" data-iconpos="notext" class="ui-btn-right"
+                   onclick="doClose();
+                return false">Close</a>
+                <div id="hoverHeader" class="ui-widget-header ui-corner-top">Pointer:&nbsp;
+                    <span id="hoverPointer">&nbsp;</span>
+                </div>
+                <div id="hoverDetail" class="ui-widget-content ui-corner-bottom">
+                    &nbsp;
+                </div>
+            </div>
+            <!--
+            <div id="navigation" data-role="controlgroup" data-type="vertical">
+                    <a href="#" data-role="button" data-icon="plus" id="plus"
+                       data-iconpos="notext"></a> 
+                    <a href="#" data-role="button"
+                       data-icon="minus" id="minus" data-iconpos="notext"></a>
+            </div>
+            -->
+            <div id="mensajenav" data-role="controlgroup" data-type="vertical">
+
+            </div>
+        </section>
+
+        <section data-role="page" id="searchpage">
+            <header data-role="header">
+                <a href="#mappage" data-icon="arrow-l">Atras</a>
+                <h1>Busqueda</h1>
+            </header>
+            <div data-role="fieldcontain">
+                <select id="searchType" name="searchType">
+                    <option value="Address">Direcci&oacute;n</option>
+                    <option value="Building">Edif/Urb</option>
+                    <option value="Roads">Calle o Avenida</option>
+                    <option value="Barrio">Barrio</option>
+                    <option value="Business">Comercio</option>
+                    <option value="Pointer">Pointer</option>
+                    <option value="RUC">RUC</option>
+                </select> 
+                <input type="search" name="query" id="query" value="" placeholder="Busqueda" autocomplete="off" />
+            </div>
+            <ul data-role="listview" data-inset="true" id="search_results"></ul>
+        </section>
+
+        <section data-role="page" id="logpage">
+            <header data-role="header">
+                <a href="#mappage" data-icon="arrow-l">Atras</a>
+                <h1>Opciones</h1>
+            </header>
+            <!--
+            <div  data-role="controlgroup" id="grupobt" data-type="vertical" data-mini="true">
+                <a href="#" id="searchbt" data-icon="search" data-role="button">Busqueda</a>
+                <a href="#mappage" id="locate" data-icon="locate" data-role="button">Mi Pointer</a> 
+                <a href="#mappage" class="toolsmap" id="bextender"  data-icon="extender"  data-role="button" >Extender</a>
+                <a href="#mappage" class="toolsmap" id="blimpiar"  data-icon="borrar" data-role="button" >Limpiar</a>
+            </div>
+            -->
+            <ul data-role="listview" data-inset="true" id="logpointer"></ul>
+            
+        </section>
+        
+        <script type="text/javascript" src="js/mobile-config.js"></script>
+        <script type="text/javascript" src="js/geoloc.js"></script>
+        <script type="text/javascript" src="js/mobile-base.js"></script>
+        <script type="text/javascript" src="js/mobile-jq.js"></script>
+        <script type="text/javascript" src="js/utilesmap.js"></script>
+    </body>
+</html>
