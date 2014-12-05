@@ -63,11 +63,23 @@
     <access origin="http://b.tile.openstreetmap.org*" />
     <access origin="http://c.tile.openstreetmap.org*" />
     <gap:plugin name="org.apache.cordova.device"/> 
-    <gap:plugin name="org.apache.cordova.geolocation"  /> 
+    <gap:plugin name="org.apache.cordova.geolocation" /> 
+    <gap:plugin name="org.apache.cordova.core.geolocation" />
     <feature name="Geolocation">
         <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker" />
     </feature>
     <feature name="Geolocation">
         <param name="ios-package" value="CDVLocation" />
     </feature>
+    <plugins>
+        <plugin name="Device" value="CDVDevice" />
+        <plugin name="Logger" value="CDVLogger" />
+        <plugin name="Compass" value="CDVLocation" />
+        <plugin name="NetworkStatus" value="CDVConnection" />
+        <plugin name="Debug Console" value="CDVDebugConsole" />
+        <plugin name="Geolocation" value="CDVLocation" />
+        <plugin name="SplashScreen" value="CDVSplashScreen" />
+        <plugin name="Battery" value="CDVBattery" />
+        <plugin name="Globalization" value="CDVGlobalization" />
+    </plugins>
 </widget>

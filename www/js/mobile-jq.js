@@ -3,7 +3,7 @@
 window.location.replace(window.location.href.split("#")[0] + "#mappage");
 var selectedFeature = null;
 var platf = "Otro";
-var devplat='Android';
+var devplat = 'Android';
 function doClose() {
     $('#popupUbicacion').fadeOut();
 }
@@ -18,8 +18,11 @@ function getDeviceProperty()
 
     if (platf === "Android") {
         $("#salirapp").show();
+    }else{
+        $('#botonesup').css("padding-top","10px");
     }
 
+    inicioready();
 }
 
 function salida() {
@@ -30,21 +33,23 @@ function salida() {
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#salirapp").hide();
     document.addEventListener("deviceready", getDeviceProperty, false);
     //getDeviceProperty();
+});
 
-    $("#salirapp").click(function() {
+function inicioready() {
+    $("#salirapp").click(function () {
         salida();
     });
 
-    $('#popupUbicacion-screen').click(function() {
+    $('#popupUbicacion-screen').click(function () {
         $.mobile.changePage("#manpage");
         logp("popup manpage");
     });
 
-    document.addEventListener("backbutton", function(e) {
+    document.addEventListener("backbutton", function (e) {
         if ($.mobile.activePage.is('#mappage')) {
             e.preventDefault();
             navigator.app.exitApp();
@@ -73,13 +78,13 @@ $(document).ready(function() {
     $(window).bind("orientationchange resize pageshow", fixContentHeight);
     document.body.onload = fixContentHeight;
     // Map zoom  
-    $("#plus").click(function() {
+    $("#plus").click(function () {
         map.zoomIn();
     });
-    $("#minus").click(function() {
+    $("#minus").click(function () {
         map.zoomOut();
     });
-    $("#locate").click(function() {
+    $("#locate").click(function () {
         /* var control = map.getControlsBy("id", "locate-control")[0];
          if (control.active) {
          control.getCurrentLocation();
@@ -88,39 +93,39 @@ $(document).ready(function() {
          }*/
         getLocationUpdate();
     });
-    $("#bextender").click(function() {
+    $("#bextender").click(function () {
         $("#grupobt").hide();
         extender(true, true, true);
         $.mobile.changePage("#manpage");
     });
-    $("#blimpiar").click(function() {
+    $("#blimpiar").click(function () {
         $("#grupobt").hide();
         limpiabusquedamap();
         $.mobile.changePage("#manpage");
     });
-/*
-    $("#optbt").click(function() {
-        $.mobile.changePage("#logpage");
-        caracteristicas();
-    });
-*/
+    /*
+     $("#optbt").click(function() {
+     $.mobile.changePage("#logpage");
+     caracteristicas();
+     });
+     */
 
-    $("#logbt").click(function() {
+    $("#logbt").click(function () {
 //$.mobile.changePage("#logpage");
 //caracteristicas();
         $("#grupobt").toggle();
     });
-    $("#searchbt").click(function() {
+    $("#searchbt").click(function () {
         $("#grupobt").hide();
         $.mobile.changePage("#searchpage");
         $('#query').focus();
     });
-    $("#resultado").click(function() {
-        $("#resultado").fadeOut("slow", function() {
+    $("#resultado").click(function () {
+        $("#resultado").fadeOut("slow", function () {
             mensajeLimpia();
         });
     });
-    $('#popup').live('pageshow', function(event, ui) {
+    $('#popup').live('pageshow', function (event, ui) {
         var li = "";
         for (var attr in selectedFeature.attributes) {
             li += "<li><div style='width:25%;float:left'>" + attr + "</div><div style='width:75%;float:right'>"
@@ -128,14 +133,14 @@ $(document).ready(function() {
         }
         $("ul#details-list").empty().append(li).listview("refresh");
     });
-    $('#searchType').change(function() {
+    $('#searchType').change(function () {
         $('#search_results').empty();
         $('#query').val('')
         $('#query').focus();
     });
-    $('#searchpage').live('pageshow', function(event, ui) {
-        $('#query').bind('keyup', function(e) {
-            delay(function() {
+    $('#searchpage').live('pageshow', function (event, ui) {
+        $('#query').bind('keyup', function (e) {
+            delay(function () {
 
                 $('#search_results').empty();
                 if ($('#query')[0].value === '') {
@@ -149,14 +154,14 @@ $(document).ready(function() {
                 qvalor = $('#query')[0].value;
                 console.log('Buscando ' + stype + ': ' + qvalor);
                 logp('Buscando ' + stype + ': ' + qvalor);
-                Server.suggest(stype, qvalor, function(results) {
-                    $.each(results, function() {
+                Server.suggest(stype, qvalor, function (results) {
+                    $.each(results, function () {
                         var place = this;
                         $('<li>').hide()
                                 .append($('<h2 />', {
                                     text: place.label
                                 })).appendTo('#search_results')
-                                .click(function() {
+                                .click(function () {
 
                                     $.mobile.changePage('#mappage');
                                     //vector.removeAllFeatures();
@@ -168,7 +173,7 @@ $(document).ready(function() {
                                     } catch (e) {
                                         s2.log("");
                                     }
-                                    Server.select(place.type, place.id, null, 'public', function(results) {
+                                    Server.select(place.type, place.id, null, 'public', function (results) {
                                         s2.selectResults(place.type, place.id, results);
                                         if (place.type == 'Address' ||
                                                 place.type == 'Building' ||
@@ -189,11 +194,12 @@ $(document).ready(function() {
         // only listen to the first event triggered
         $('#searchpage').die('pageshow', arguments.callee);
     });
-   getLocationInicial();
-});
-var delay = (function() {
+    getLocationInicial();
+}
+
+var delay = (function () {
     var timer = 0;
-    return function(callback, ms) {
+    return function (callback, ms) {
         clearTimeout(timer);
         timer = setTimeout(callback, ms);
     };
@@ -205,7 +211,7 @@ function initLayerList() {
         "data-role": "list-divider",
         text: "Capas base"
     }).appendTo('#layerslist');
-    $.each(baseLayers, function() {
+    $.each(baseLayers, function () {
         addLayerToList(this);
     });
     $('<li>', {
@@ -213,11 +219,11 @@ function initLayerList() {
         text: "Capas adicionales"
     }).appendTo('#layerslist');
     var overlayLayers = map.getLayersBy("isBaseLayer", false);
-    $.each(overlayLayers, function() {
+    $.each(overlayLayers, function () {
         addLayerToList(this);
     });
     $('#layerslist').listview('refresh');
-    map.events.register("addlayer", this, function(e) {
+    map.events.register("addlayer", this, function (e) {
         addLayerToList(e.layer);
     });
 }
@@ -230,7 +236,7 @@ function addLayerToList(layer) {
             .append($('<a />', {
                 text: layer.name
             })
-                    .click(function() {
+                    .click(function () {
                         $.mobile.changePage('#mappage');
                         if (layer.isBaseLayer) {
                             layer.map.setBaseLayer(layer);
@@ -241,7 +247,7 @@ function addLayerToList(layer) {
                     )
             .appendTo('#layerslist');
     layer.events.on({
-        'visibilitychanged': function() {
+        'visibilitychanged': function () {
             $(item).toggleClass('checked');
         }
     });
@@ -255,7 +261,7 @@ function buscaDescripcion(pBID) {
             + "&typeName="
             + 'S2:DAD_Buildings'
             + '&CQL_FILTER=Dad_BuildingID in (' + pBID + ')',
-            function(data) {
+            function (data) {
                 geojsonParser = new OpenLayers.Format.GeoJSON();
                 var _layer = vector;
                 var nuevasFeatures = geojsonParser.read(data);
