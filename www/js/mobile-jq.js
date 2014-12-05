@@ -20,6 +20,7 @@ function getDeviceProperty()
         $("#salirapp").show();
     }else{
         $('#botonesup').css("padding-top","10px");
+        $('#acercade').css("top","20px");
     }
 
     inicioready();
