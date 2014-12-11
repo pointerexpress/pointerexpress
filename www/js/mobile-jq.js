@@ -18,7 +18,6 @@ function getDeviceProperty()
 
     if (platf === "Android") {
         $("#salirapp").show();
-        $('#headerbusqueda').css("padding-top","15px");
     }else{
         $('#botonesup').css("padding-top","10px");
         $('#headerbusqueda').css("padding-top","15px");
