@@ -20,9 +20,9 @@ function getDeviceProperty()
         $("#salirapp").show();
     }else{
         $('#botonesup').css("padding-top","10px");
-        $('#headerbusqueda').css("padding-top","15px");
+        $('#headerbusqueda').css("padding-top","20px");
         $('#acercade').css("top","20px");
-        $('#atrasbt').css("padding-top","15px");
+        $('#atrasbt').css("top","20px");
         
     }
 
