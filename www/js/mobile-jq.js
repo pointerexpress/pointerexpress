@@ -23,6 +23,7 @@ function getDeviceProperty()
         $('#headerbusqueda').css("padding-top","15px");
         $('#acercade').css("top","20px");
         $('#atrasbt').css("top","20px");
+        
     }
 
     inicioready();
