@@ -98,7 +98,7 @@ function getLocationUpdate() {
         default:
             geoiter = 0;
             console.log("sin ubicacion");
-            alert('Ubicación no disponible');
+            //alert('Ubicación no disponible');
     }
 
     //alert('enviado');
